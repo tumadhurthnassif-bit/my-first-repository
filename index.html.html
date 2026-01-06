@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internal Technical Training Program - CEO Presentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: #0f1419;
+            color: #ffffff;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slides-wrapper {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1A3A52 0%, #2D5A7B 100%);
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px;
+        }
+
+        .slide.active {
+            opacity: 1;
+            z-index: 10;
+        }
+
+        .slide-content {
+            max-width: 1200px;
+            width: 100%;
+            animation: slideInUp 0.8s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 56px;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+
+        .slide h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: #D4AF37;
+            margin-bottom: 40px;
+            line-height: 1.2;
+        }
+
+        .slide h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #D4AF37;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .slide p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #E8F1F5;
+            margin-bottom: 15px;
+        }
+
+        .slide ul {
+            list-style: none;
+            margin-left: 0;
+            margin-bottom: 20px;
+        }
+
+        .slide li {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #E8F1F5;
+            margin-bottom: 12px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .slide li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #D4AF37;
+            font-size: 20px;
+        }
+
+        .slide table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .slide table th {
+            background: rgba(212, 175, 55, 0.2);
+            color: #D4AF37;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #D4AF37;
+        }
+
+        .slide table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: #E8F1F5;
+        }
+
+        .slide table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .track-box {
+            background: rgba(212, 175, 55, 0.1);
+            border-left: 4px solid #D4AF37;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .track-box strong {
+            color: #D4AF37;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 60px;
+            background: rgba(26, 58, 82, 0.95);
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        button {
+            background: #D4AF37;
+            color: #1A3A52;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        button:hover {
+            background: #E8C547;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        button:disabled {
+            background: #666;
+            color: #999;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            color: #E8F1F5;
+        }
+
+        .slide-number {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #D4AF37;
+            transition: width 0.3s ease;
+        }
+
+        .slide-title-nav {
+            color: #D4AF37;
+            font-weight: 600;
+            margin: 0 20px;
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .keyboard-hint {
+            font-size: 12px;
+            color: #999;
+            margin-left: auto;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .slide {
+                padding: 40px;
+            }
+
+            .slide h1 {
+                font-size: 44px;
+            }
+
+            .slide h2 {
+                font-size: 36px;
+            }
+
+            .controls {
+                padding: 15px 30px;
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .keyboard-hint {
+                width: 100%;
+                text-align: center;
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px;
+            }
+
+            .slide h1 {
+                font-size: 32px;
+            }
+
+            .slide h2 {
+                font-size: 28px;
+            }
+
+            .slide p {
+                font-size: 16px;
+            }
+
+            button {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .slide-counter {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .progress-bar {
+                width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="slides-wrapper">
+            <!-- Slide 1: Title -->
+            <div class="slide active">
+                <div class="slide-content">
+                    <h1>Internal Technical Training Program</h1>
+                    <h2 style="font-size: 32px; margin-top: 20px;">Building Technical Excellence Across the Organization</h2>
+                    <div style="margin-top: 60px;">
+                        <p><strong style="color: #D4AF37;">Program Start:</strong> January 15, 2026</p>
+                        <p><strong style="color: #D4AF37;">Duration:</strong> 4 Weeks (January 15 - February 5)</p>
+                        <p><strong style="color: #D4AF37;">Tracks:</strong> 4 Specialized Technical Programs</p>
+                        <p><strong style="color: #D4AF37;">Total Hours:</strong> 22 Hours of Expert Training</p>
+                    </div>
+                    <div class="track-box" style="margin-top: 40px;">
+                        <strong>Four Specialized Tracks</strong>
+                        <ul style="margin-top: 15px;">
+                            <li>Servers & Data Center Fundamentals</li>
+                            <li>IP Phones & Yeastar PBX Systems</li>
+                            <li>CCTV & FTTX Solutions</li>
+                            <li>Network Switches</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2: Executive Summary -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>Strategic Investment in Employee Technical Competency</h2>
+                    <h3>Program Scope</h3>
+                    <p>Four specialized technical tracks spanning 12-16 training days, designed for technical staff and key personnel requiring specialized knowledge in infrastructure and communication systems.</p>
+                    
+                    <h3>Expected Outcomes</h3>
+                    <ul>
+                        <li>Enhanced technical capabilities and operational efficiency</li>
+                        <li>Stronger infrastructure management skills</li>
+                        <li>Reduced external consulting costs</li>
+                        <li>Faster problem resolution</li>
+                        <li>Improved system reliability</li>
+                    </ul>
+
+                    <h3>Strategic Value</h3>
+                    <p>This training investment develops internal expertise in critical infrastructure areas, reducing dependency on external consultants and enabling faster, more cost-effective problem resolution. It strengthens organizational capability and supports long-term growth and competitiveness.</p>
+                </div>
+            </div>
+
+            <!-- Slide 3: Four Tracks Overview -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>Four Specialized Training Tracks</h2>
+                    
+                    <div class="track-box">
+                        <strong>Track 1: Servers & Data Center Fundamentals (4 days)</strong>
+                        <p style="margin-top: 10px; font-size: 16px;">Data center architecture, server technologies, environmental systems, capacity planning. Business application: Improved infrastructure planning, better system selection, optimized operations.</p>
+                    </div>
+
+                    <div class="track-box">
+                        <strong>Track 2: IP Phones & Yeastar PBX Systems (3 days)</strong>
+                        <p style="margin-top: 10px; font-size: 16px;">VoIP technology, Yeastar systems, BOQ preparation, cost analysis. Business application: Cost-effective communication systems, professional proposals, successful implementations.</p>
+                    </div>
+
+                    <div class="track-box">
+                        <strong>Track 3: CCTV & FTTX Solutions (3 days)</strong>
+                        <p style="margin-top: 10px; font-size: 16px;">Network topology design, signal loss calculations, equipment selection. Business application: Professional security system design, optimized network infrastructure, reduced signal loss.</p>
+                    </div>
+
+                    <div class="track-box">
+                        <strong>Track 4: Network Switches (3 days)</strong>
+                        <p style="margin-top: 10px; font-size: 16px;">Switch fundamentals, types, features, selection criteria. Business application: Optimized network performance, better infrastructure planning, improved reliability.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: Training Schedule -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>Training Schedule - January 15 Start</h2>
+                    <p style="margin-bottom: 20px;"><strong style="color: #D4AF37;">Daily Time:</strong> 11:00 AM - 1:20 PM (2 hours with 20-minute break after first hour) | <strong style="color: #D4AF37;">Weekends:</strong> Fridays Off</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Track</th>
+                                <th>Trainer</th>
+                                <th>Dates</th>
+                                <th>Duration</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Servers & Data Center</td>
+                                <td>Ammar</td>
+                                <td>Jan 15-16, 20-21, 2026</td>
+                                <td>4 days</td>
+                            </tr>
+                            <tr>
+                                <td>IP Phones & Yeastar PBX</td>
+                                <td>Taha</td>
+                                <td>Jan 22-23, 27, 2026</td>
+                                <td>3 days</td>
+                            </tr>
+                            <tr>
+                                <td>CCTV & FTTX Solutions</td>
+                                <td>Asaad</td>
+                                <td>Jan 28-30, 2026</td>
+                                <td>3 days</td>
+                            </tr>
+                            <tr>
+                                <td>Network Switches</td>
+                                <td>Yasir Mahmoud</td>
+                                <td>Feb 3-5, 2026</td>
+                                <td>3 days</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="margin-top: 30px;"><strong style="color: #D4AF37;">Program Duration:</strong> 4 weeks (January 15 - February 5, 2026) | <strong style="color: #D4AF37;">Total Training Hours:</strong> 26 hours</p>
+                </div>
+            </div>
+
+            <!-- Slide 5: Track 1 Details -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>Track 1: Servers & Data Center Fundamentals</h2>
+                    <p><strong style="color: #D4AF37;">Trainer:</strong> Ammar | <strong style="color: #D4AF37;">Duration:</strong> 4 days (8 hours)</p>
+                    
+                    <h3>Daily Breakdown</h3>
+                    <ul>
+                        <li><strong>Day 1 (Jan 15):</strong> Data Center Fundamentals & Architecture</li>
+                        <li><strong>Day 2 (Jan 16):</strong> Power & Cooling Systems</li>
+                        <li><strong>Day 3 (Jan 20):</strong> Server Technologies & Virtualization</li>
+                        <li><strong>Day 4 (Jan 21):</strong> Security, Disaster Recovery & Operations</li>
+                    </ul>
+                    <p style="margin-top: 15px; font-size: 14px;"><strong style="color: #D4AF37;">Time:</strong> 11:00 AM - 1:20 PM (with 20-min break at 12:00 PM)</p>
+
+                    <h3>Expected Outcomes</h3>
+                    <ul>
+                        <li>Understand data center tiers and architecture</li>
+                        <li>Select appropriate servers for various workloads</li>
+                        <li>Understand power and cooling requirements</li>
+                        <li>Plan capacity and growth</li>
+                        <li>Design basic data center infrastructure</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 6: Track 2 Details -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>Track 2: IP Phones & Yeastar PBX Systems</h2>
+                    <p><strong style="color: #D4AF37;">Trainer:</strong> Taha | <strong style="color: #D4AF37;">Duration:</strong> 3 days (6 hours)</p>
+                    
+                    <h3>Daily Breakdown</h3>
+                    <ul>
+                        <li><strong>Day 1 (Jan 22):</strong> VoIP Fundamentals & Yeastar Overview</li>
+                        <li><strong>Day 2 (Jan 23):</strong> System Configuration & Setup</li>
+                        <li><strong>Day 3 (Jan 27):</strong> BOQ Preparation & Business Application</li>
+                    </ul>
+                    <p style="margin-top: 15px; font-size: 14px;"><strong style="color: #D4AF37;">Time:</strong> 11:00 AM - 1:20 PM (with 20-min break at 12:00 PM)</p>
+
+                    <h3>Expected Outcomes</h3>
+                    <ul>
+                        <li>Understand VoIP technology and Yeastar systems</li>
+                        <li>Assess system requirements</li>
+                        <li>Create professional Bills of Quantities</li>
+                        <li>Calculate costs and ROI</li>
+                        <li>Plan and present system implementations</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 7: Track 3 Details -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>Track 3: CCTV & FTTX Solutions</h2>
+                    <p><strong style="color: #D4AF37;">Trainer:</strong> Asaad | <strong style="color: #D4AF37;">Duration:</strong> 3 days (6 hours)</p>
+                    
+                    <h3>Daily Breakdown</h3>
+                    <ul>
+                        <li><strong>Day 1 (Jan 28):</strong> Network Topology & CCTV Fundamentals</li>
+                        <li><strong>Day 2 (Jan 29):</strong> Signal Loss & Cable Selection</li>
+                        <li><strong>Day 3 (Jan 30):</strong> System Design & Implementation</li>
+                    </ul>
+                    <p style="margin-top: 15px; font-size: 14px;"><strong style="color: #D4AF37;">Time:</strong> 11:00 AM - 1:20 PM (with 20-min break at 12:00 PM)</p>
+
+                    <h3>Expected Outcomes</h3>
+                    <ul>
+                        <li>Understand Star and Ring network topologies</li>
+                        <li>Calculate signal loss and select cables</li>
+                        <li>Select cameras and equipment</li>
+                        <li>Design complete CCTV/FTTX systems</li>
+                        <li>Plan and oversee installations</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 8: Track 4 Details -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>Track 4: Network Switches</h2>
+                    <p><strong style="color: #D4AF37;">Trainer:</strong> Yasir Mahmoud | <strong style="color: #D4AF37;">Duration:</strong> 3 days (6 hours)</p>
+                    
+                    <h3>Daily Breakdown</h3>
+                    <ul>
+                        <li><strong>Day 1 (Feb 3):</strong> Switch Fundamentals & Types</li>
+                        <li><strong>Day 2 (Feb 4):</strong> Switch Selection & Features</li>
+                        <li><strong>Day 3 (Feb 5):</strong> Network Design & Implementation</li>
+                    </ul>
+                    <p style="margin-top: 15px; font-size: 14px;"><strong style="color: #D4AF37;">Time:</strong> 11:00 AM - 1:20 PM (with 20-min break at 12:00 PM)</p>
+
+                    <h3>Expected Outcomes</h3>
+                    <ul>
+                        <li>Understand switch fundamentals and types</li>
+                        <li>Assess network requirements</li>
+                        <li>Select appropriate switches</li>
+                        <li>Design network infrastructure</li>
+                        <li>Troubleshoot basic switch issues</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 9: Delivery Methodology -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>Training Delivery Methodology</h2>
+                    
+                    <h3>Instructional Methods</h3>
+                    <ul>
+                        <li>Interactive Lectures with real-world examples</li>
+                        <li>Live Demonstrations and walkthroughs</li>
+                        <li>Practical Exercises and design challenges</li>
+                        <li>Group Discussions and peer learning</li>
+                        <li>Case Studies of real implementations</li>
+                    </ul>
+
+                    <h3>Assessment & Materials</h3>
+                    <ul>
+                        <li>Daily Quizzes for knowledge checks</li>
+                        <li>Practical Exercises with grading rubrics</li>
+                        <li>Trainer Guides with detailed session plans</li>
+                        <li>Participant Handouts and workbooks</li>
+                        <li>Professional Completion Certificates</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 10: Business Outcomes -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>Expected Business Outcomes</h2>
+                    
+                    <h3>Immediate Outcomes (During Training)</h3>
+                    <ul>
+                        <li>Employees gain specialized technical knowledge</li>
+                        <li>Team develops common understanding of systems</li>
+                        <li>Identification of capability gaps</li>
+                    </ul>
+
+                    <h3>Short-Term Outcomes (1-3 Months)</h3>
+                    <ul>
+                        <li>Improved problem resolution speed</li>
+                        <li>Reduced reliance on external consultants</li>
+                        <li>Better infrastructure planning decisions</li>
+                        <li>Successful implementation of new systems</li>
+                    </ul>
+
+                    <h3>Long-Term Outcomes (6-12 Months)</h3>
+                    <ul>
+                        <li>Reduced external consulting costs</li>
+                        <li>Improved system reliability and uptime</li>
+                        <li>Enhanced organizational capability</li>
+                        <li>Potential revenue generation through professional services</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 11: Trainer Assignments -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>Trainer Assignments & Qualifications</h2>
+                    
+                    <div class="track-box">
+                        <strong>Track 1: Ammar</strong>
+                        <p style="margin-top: 10px; font-size: 16px;">Infrastructure expertise, data center knowledge, system design experience. Delivers 4-day training with assessment and feedback.</p>
+                    </div>
+
+                    <div class="track-box">
+                        <strong>Track 2: Taha</strong>
+                        <p style="margin-top: 10px; font-size: 16px;">VoIP expertise, Yeastar system knowledge, BOQ preparation experience. Delivers 3-day training with assessment and feedback.</p>
+                    </div>
+
+                    <div class="track-box">
+                        <strong>Track 3: Asaad</strong>
+                        <p style="margin-top: 10px; font-size: 16px;">Network design expertise, CCTV knowledge, fiber optic experience. Delivers 3-day training with assessment and feedback.</p>
+                    </div>
+
+                    <div class="track-box">
+                        <strong>Track 4: Yasir Mahmoud</strong>
+                        <p style="margin-top: 10px; font-size: 16px;">Network engineering expertise, switch knowledge, network design experience. Delivers 3-day training with assessment and feedback.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 12: Implementation Timeline -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>Implementation Timeline & Logistics</h2>
+                    
+                    <h3>Pre-Training Phase (Dec 25 - Jan 14)</h3>
+                    <ul>
+                        <li>Finalize trainer assignments and confirmations</li>
+                        <li>Distribute trainer guides and materials</li>
+                        <li>Trainer preparation and review</li>
+                        <li>Participant registration and communication</li>
+                        <li>Facility and equipment setup</li>
+                    </ul>
+
+                    <h3>Training Phase (Jan 15 - Feb 5)</h3>
+                    <ul>
+                        <li>Week 1: Track 1 (Servers & Data Center) - Jan 15-18</li>
+                        <li>Week 2: Track 2 (IP Phones & Yeastar PBX) - Jan 20-22</li>
+                        <li>Week 3: Track 3 (CCTV & FTTX) - Jan 27-29</li>
+                        <li>Week 4: Track 4 (Network Switches) - Feb 3-5</li>
+                    </ul>
+
+                    <h3>Post-Training Phase (Feb 6 onwards)</h3>
+                    <ul>
+                        <li>Collect participant feedback</li>
+                        <li>Evaluate training effectiveness</li>
+                        <li>Distribute certificates</li>
+                        <li>Measure business outcomes</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 13: Resource Requirements -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>Resource Requirements</h2>
+                    
+                    <h3>Personnel</h3>
+                    <ul>
+                        <li>Four qualified trainers (Ammar, Taha, Asaad, Yasir Mahmoud)</li>
+                        <li>Training coordinator</li>
+                        <li>Administrative support</li>
+                    </ul>
+
+                    <h3>Materials & Facilities</h3>
+                    <ul>
+                        <li>Trainer guides and participant handouts (all 4 tracks)</li>
+                        <li>Practical exercise worksheets and assessment tools</li>
+                        <li>Training room or virtual platform</li>
+                        <li>Audio/visual equipment and network access</li>
+                        <li>Demonstration systems (if applicable)</li>
+                    </ul>
+
+                    <h3>Technology</h3>
+                    <ul>
+                        <li>Learning management system (optional)</li>
+                        <li>Video conferencing (if virtual)</li>
+                        <li>Document sharing platform</li>
+                        <li>Assessment and evaluation tools</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 14: Success Metrics -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>Success Metrics & Evaluation</h2>
+                    
+                    <h3>Participant Success Metrics</h3>
+                    <ul>
+                        <li>100% attendance for all training days</li>
+                        <li>70% or higher on quizzes and exercises</li>
+                        <li>Completion of all requirements</li>
+                        <li>Positive feedback on training quality</li>
+                    </ul>
+
+                    <h3>Program Success Metrics</h3>
+                    <ul>
+                        <li>90% or higher completion rate</li>
+                        <li>Average 30% improvement in pre/post assessments</li>
+                        <li>Average 4/5 or higher satisfaction rating</li>
+                        <li>Participants apply learning within 30 days</li>
+                    </ul>
+
+                    <h3>Business Impact Metrics</h3>
+                    <ul>
+                        <li>Reduced external consulting costs</li>
+                        <li>Faster problem resolution time</li>
+                        <li>Improved system design and implementation quality</li>
+                        <li>Increased internal expertise and capability</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 15: Investment & Return -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>Investment & Return Analysis</h2>
+                    
+                    <h3>Investment Components</h3>
+                    <ul>
+                        <li>Trainer time and preparation</li>
+                        <li>Training materials development</li>
+                        <li>Facility and equipment</li>
+                        <li>Participant time (6 hours per track)</li>
+                        <li>Administrative coordination</li>
+                    </ul>
+
+                    <h3>Expected Returns</h3>
+                    <ul>
+                        <li><strong style="color: #D4AF37;">Cost Savings:</strong> Significant reduction in external consulting fees</li>
+                        <li><strong style="color: #D4AF37;">Efficiency:</strong> Faster problem resolution and system implementation</li>
+                        <li><strong style="color: #D4AF37;">Better Decisions:</strong> More informed infrastructure planning</li>
+                        <li><strong style="color: #D4AF37;">Employee Retention:</strong> Improved development and satisfaction</li>
+                    </ul>
+
+                    <h3>ROI Timeline</h3>
+                    <ul>
+                        <li><strong>Immediate:</strong> Improved internal capability</li>
+                        <li><strong>3-6 Months:</strong> Measurable cost savings</li>
+                        <li><strong>6-12 Months:</strong> Significant ROI through reduced consulting costs</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 16: Recommendations -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>Recommendations & Next Steps</h2>
+                    
+                    <h3>Immediate Actions Required</h3>
+                    <ul>
+                        <li>Approve Training Program - CEO authorization to proceed</li>
+                        <li>Confirm Trainer Assignments - Finalize trainer roles and responsibilities</li>
+                        <li>Communicate to Participants - Notify of training dates and requirements</li>
+                        <li>Prepare Facilities - Arrange training location and equipment</li>
+                        <li>Distribute Materials - Provide trainers with guides and materials</li>
+                    </ul>
+
+                    <h3>Pre-Training Actions (By January 14)</h3>
+                    <ul>
+                        <li>Trainer preparation and review</li>
+                        <li>Participant registration</li>
+                        <li>Facility setup and testing</li>
+                        <li>Equipment verification</li>
+                        <li>Final logistics coordination</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 17: Conclusion -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>Building Technical Excellence Through Strategic Development</h2>
+                    
+                    <h3>Key Takeaways</h3>
+                    <ul>
+                        <li><strong style="color: #D4AF37;">Four Specialized Tracks:</strong> Comprehensive coverage of critical infrastructure areas</li>
+                        <li><strong style="color: #D4AF37;">Experienced Trainers:</strong> Qualified professionals leading each track</li>
+                        <li><strong style="color: #D4AF37;">Structured Curriculum:</strong> Well-designed content with clear learning objectives</li>
+                        <li><strong style="color: #D4AF37;">Practical Focus:</strong> Real-world scenarios and hands-on exercises</li>
+                        <li><strong style="color: #D4AF37;">Measurable Outcomes:</strong> Clear assessment and evaluation methods</li>
+                    </ul>
+
+                    <h3 style="margin-top: 30px;">Call to Action</h3>
+                    <p>This training program represents a strategic investment in organizational capability. We recommend immediate approval to proceed with implementation starting January 15, 2026.</p>
+                </div>
+            </div>
+
+            <!-- Slide 18: Contact & Support -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>Contact & Support Information</h2>
+                    
+                    <h3>Key Contacts</h3>
+                    <div class="track-box">
+                        <p><strong>Training Coordinator:</strong> [Your Name] - [Contact Information]</p>
+                        <p><strong>Track 1 Trainer:</strong> Ammar - [Contact Information]</p>
+                        <p><strong>Track 2 Trainer:</strong> Taha - [Contact Information]</p>
+                        <p><strong>Track 3 Trainer:</strong> Asaad - [Contact Information]</p>
+                        <p><strong>Track 4 Trainer:</strong> Yasir Mahmoud - [Contact Information]</p>
+                    </div>
+
+                    <h3>Support Resources</h3>
+                    <ul>
+                        <li>Trainer guides and materials</li>
+                        <li>Participant handouts and workbooks</li>
+                        <li>Assessment tools and evaluation forms</li>
+                        <li>Quick reference sheets</li>
+                        <li>Training portal website</li>
+                    </ul>
+
+                    <p style="margin-top: 30px; text-align: center; color: #D4AF37;"><strong>Questions or concerns? Contact the training coordinator or relevant trainer.</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <div class="nav-buttons">
+                <button id="prevBtn" onclick="previousSlide()">← Previous</button>
+                <button id="nextBtn" onclick="nextSlide()">Next →</button>
+            </div>
+            <div class="slide-counter">
+                <span class="slide-title-nav" id="slideTitle">Internal Technical Training Program</span>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <span class="slide-number"><span id="currentSlide">1</span> / <span id="totalSlides">18</span></span>
+            </div>
+            <span class="keyboard-hint">Use ← → arrow keys or click buttons to navigate</span>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 18;
+        const slideTitles = [
+            'Internal Technical Training Program',
+            'Strategic Investment in Employee Technical Competency',
+            'Four Specialized Training Tracks',
+            'Training Schedule - January 15 Start',
+            'Track 1: Servers & Data Center Fundamentals',
+            'Track 2: IP Phones & Yeastar PBX Systems',
+            'Track 3: CCTV & FTTX Solutions',
+            'Track 4: Network Switches',
+            'Training Delivery Methodology',
+            'Expected Business Outcomes',
+            'Trainer Assignments & Qualifications',
+            'Implementation Timeline & Logistics',
+            'Resource Requirements',
+            'Success Metrics & Evaluation',
+            'Investment & Return Analysis',
+            'Recommendations & Next Steps',
+            'Building Technical Excellence Through Strategic Development',
+            'Contact & Support Information'
+        ];
+
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            
+            if (n > totalSlides) currentSlide = totalSlides;
+            if (n < 1) currentSlide = 1;
+            
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[currentSlide - 1].classList.add('active');
+            
+            document.getElementById('currentSlide').textContent = currentSlide;
+            document.getElementById('slideTitle').textContent = slideTitles[currentSlide - 1];
+            document.getElementById('progressFill').style.width = (currentSlide / totalSlides * 100) + '%';
+            
+            document.getElementById('prevBtn').disabled = currentSlide === 1;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+        }
+
+        function nextSlide() {
+            currentSlide++;
+            showSlide(currentSlide);
+        }
+
+        function previousSlide() {
+            currentSlide--;
+            showSlide(currentSlide);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') previousSlide();
+        });
+
+        // Initialize
+        showSlide(currentSlide);
+    </script>
+</body>
+</html>
